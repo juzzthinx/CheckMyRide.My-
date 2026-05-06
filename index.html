@@ -1,1 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CheckMyRide.My — Jeep Culture Malaysia</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+JP:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2ed;
+    --sand: #c8b89a;
+    --mud: #6b5c47;
+    --rust: #c0451a;
+    --olive: #4a5240;
+    --paper: #ede8df;
+    --ink: #1a1a1a;
+  }
 
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--black);
+    border-bottom: 1px solid #222;
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .logo span {
+    color: var(--rust);
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .tag-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 10px;
+    color: var(--sand);
+    letter-spacing: 2px;
+  }
+
+  .list-btn {
+    background: var(--rust);
+    color: var(--white);
+    border: none;
+    padding: 8px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+
+  /* HERO STRIP */
+  .hero-strip {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    overflow: hidden;
+  }
+
+  .hero-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--rust);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .hero-ticker {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 11px;
+    color: var(--mud);
+    white-space: nowrap;
+    animation: ticker 20s linear infinite;
+  }
+
+  @keyframes ticker {
+    0% { transform: translateX(100vw); }
+    100% { transform: translateX(-100%); }
+  }
+
+  /* FILTERS */
+  .filters {
+    padding: 16px 20px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  .filters::-webkit-scrollbar { display: none; }
+
+  .filter-pill {
+    background: transparent;
+    border: 1px solid #333;
+    color: #888;
+    padding: 6px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+
+  .filter-pill.active, .filter-pill:hover {
+    border-color: var(--sand);
+    color: var(--sand);
+  }
+
+  .filter-pill.active {
+    background: #1a1510;
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    padding: 20px 20px 12px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .section-count {
+    font-size: 9px;
+    color: #555;
+    letter-spacing: 2px;
+  }
+
+  /* FEATURED — large card */
+  .featured-card {
+    margin: 0 20px 4px;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    background: #111;
+    cursor: pointer;
+  }
+
+  .featured-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+    transition: opacity 0.3s, transform 0.4s;
+  }
+
+  .featured-card:hover img {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+
+  .featured-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 16px 16px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.92));
+  }
+
+  .featured-badge {
+    display: inline-block;
+    background: var(--rust);
+    color: var(--white);
+    font-size: 8px;
+    letter-spacing: 2px;
+    padding: 3px 8px;
+    margin-bottom: 8px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .featured-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 1px;
+    line-height: 1;
+    color: var(--white);
+  }
+
+  .featured-sub {
+    font-size: 9px;
+    color: var(--sand);
+    letter-spacing: 2px;
+    margin-top: 4px;
+  }
+
+  .featured-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--rust);
+    margin-top: 8px;
+  }
+
+  .featured-meta {
+    display: flex;
+    gap: 12px;
+    margin-top: 6px;
+  }
+
+  .meta-tag {
+    font-size: 8px;
+    color: #888;
+    letter-spacing: 1px;
+    border: 1px solid #333;
+    padding: 2px 6px;
+  }
+
+  /* GRID — instagram style */
+  .grid-section {
+    padding: 4px 20px 0;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+  }
+
+  .grid-card {
+    position: relative;
+    aspect-ratio: 1;
+    background: #111;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .grid-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+    transition: opacity 0.3s, transform 0.4s;
+  }
+
+  .grid-card:hover img {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+
+  .grid-card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 10px 10px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.88));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .grid-card:hover .grid-card-overlay {
+    opacity: 1;
+  }
+
+  /* Always show info on mobile */
+  .grid-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.85));
+  }
+
+  .grid-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .grid-price {
+    font-size: 9px;
+    color: var(--rust);
+    letter-spacing: 1px;
+    margin-top: 2px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .grid-year {
+    font-size: 8px;
+    color: #888;
+    letter-spacing: 1px;
+  }
+
+  /* wide card — spans 2 cols */
+  .grid-card.wide {
+    grid-column: span 2;
+    aspect-ratio: 2/1;
+  }
+
+  /* DIVIDER */
+  .jp-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 20px 8px;
+  }
+
+  .jp-divider-line {
+    flex: 1;
+    height: 1px;
+    background: #222;
+  }
+
+  .jp-divider-text {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 10px;
+    color: #444;
+    letter-spacing: 3px;
+  }
+
+  /* CONDITION BADGES */
+  .badge-old { color: var(--sand); border-color: var(--sand); }
+  .badge-mid { color: var(--olive); border-color: var(--olive); }
+  .badge-new { color: #4a8c6f; border-color: #4a8c6f; }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #0d0d0d;
+    border-top: 1px solid #1a1a1a;
+    display: flex;
+    padding: 10px 0 20px;
+    z-index: 100;
+  }
+
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+  }
+
+  .nav-item.active { opacity: 1; }
+  .nav-item:hover { opacity: 0.8; }
+
+  .nav-icon {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .nav-label {
+    font-size: 7px;
+    letter-spacing: 1.5px;
+    color: var(--white);
+    text-transform: uppercase;
+  }
+
+  .nav-item.active .nav-label { color: var(--rust); }
+
+  /* SPACER for bottom nav */
+  .bottom-spacer { height: 80px; }
+
+  /* LOAD MORE */
+  .load-more {
+    text-align: center;
+    padding: 24px 20px;
+  }
+
+  .load-more-btn {
+    background: transparent;
+    border: 1px solid #333;
+    color: #666;
+    padding: 12px 32px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+  }
+
+  .load-more-btn:hover {
+    border-color: var(--sand);
+    color: var(--sand);
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background: var(--rust);
+    color: var(--white);
+    padding: 10px 20px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 200;
+    white-space: nowrap;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ANIMATIONS */
+  .fade-in {
+    animation: fadeIn 0.6s ease forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .grid-card:nth-child(1) { animation-delay: 0.05s; }
+  .grid-card:nth-child(2) { animation-delay: 0.1s; }
+  .grid-card:nth-child(3) { animation-delay: 0.15s; }
+  .grid-card:nth-child(4) { animation-delay: 0.2s; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">CHECK<span>MY</span>RIDE<span style="color:#333">.</span><span style="color:var(--sand)">MY</span></div>
+  <div class="header-right">
+    <span class="tag-jp">ジープ文化</span>
+    <button class="list-btn" onclick="showToast('LISTING FEATURE COMING SOON')">+ LIST YOURS</button>
+  </div>
+</header>
+
+<!-- TICKER -->
+<div class="hero-strip">
+  <span class="hero-label">TERKINI</span>
+  <span class="hero-ticker">Wrangler JK 2014 · Selangor &nbsp;///&nbsp; Land Cruiser FJ40 1979 · Johor &nbsp;///&nbsp; Defender 90 2001 · KL &nbsp;///&nbsp; Jimny Sierra 2023 · Penang &nbsp;///&nbsp; Pajero Sport 2019 · Sabah &nbsp;///&nbsp; Cherokee XJ 1998 · Perak</span>
+</div>
+
+<!-- FILTERS -->
+<div class="filters">
+  <button class="filter-pill active" onclick="filterBy(this, 'all')">ALL RIDES</button>
+  <button class="filter-pill" onclick="filterBy(this, 'classic')">CLASSIC</button>
+  <button class="filter-pill" onclick="filterBy(this, 'mid')">MID-ERA</button>
+  <button class="filter-pill" onclick="filterBy(this, 'new')">MODERN</button>
+  <button class="filter-pill" onclick="filterBy(this, '4x4')">4X4 ONLY</button>
+  <button class="filter-pill" onclick="filterBy(this, 'under50')">UNDER RM50K</button>
+  <button class="filter-pill" onclick="filterBy(this, 'modified')">MODIFIED</button>
+</div>
+
+<!-- FEATURED -->
+<div class="section-header">
+  <span class="section-title">FEATURED</span>
+  <span class="section-count">01 / 24 LISTINGS</span>
+</div>
+
+<div class="featured-card fade-in" onclick="showToast('FULL LISTING VIEW — COMING SOON')">
+  <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&q=80" alt="Jeep Wrangler">
+  <div class="featured-overlay">
+    <span class="featured-badge">FEATURED · SELANGOR</span>
+    <div class="featured-title">WRANGLER RUBICON</div>
+    <div class="featured-sub">2018 · 3.6L V6 · AUTOMATIC · 87,000KM</div>
+    <div class="featured-price">RM 148,000</div>
+    <div class="featured-meta">
+      <span class="meta-tag badge-mid">MID-ERA</span>
+      <span class="meta-tag">MODIFIED</span>
+      <span class="meta-tag">4X4</span>
+    </div>
+  </div>
+</div>
+
+<!-- DIVIDER -->
+<div class="jp-divider">
+  <div class="jp-divider-line"></div>
+  <span class="jp-divider-text">最新リスト</span>
+  <div class="jp-divider-line"></div>
+</div>
+
+<!-- SECTION HEADER -->
+<div class="section-header">
+  <span class="section-title">LATEST DROPS</span>
+  <span class="section-count">24 RIDES</span>
+</div>
+
+<!-- GRID -->
+<div class="grid-section">
+  <div class="grid">
+
+    <div class="grid-card fade-in" onclick="showToast('FULL LISTING VIEW — COMING SOON')">
+      <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=500&q=80" alt="Land Cruiser">
+      <div class="grid-info">
+        <div class="grid-year">1979 · JOHOR</div>
+        <div class="grid-name">FJ40 LAND CRUISER</div>
+        <div class="grid-price">RM 95,000</div>
+      </div>
+    </div>
+
+    <div class="grid-card fade-in" onclick="showToast('FULL LISTING VIEW — COMING SOON')">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80" alt="Defender">
+      <div class="grid-info">
+        <div class="grid-year">2001 · KUALA LUMPUR</div>
+        <div class="grid-name">DEFENDER 90</div>
+        <div class="grid-price">RM 112,000</div>
+      </div>
+    </div>
+
+    <div class="grid-card wide fade-in" onclick="showToast('FULL LISTING VIEW — COMING SOON')">
+      <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80" alt="Jimny">
+      <div class="grid-info">
+        <div class="grid-year">2023 · PENANG</div>
+        <div class="grid-name">SUZUKI JIMNY SIERRA</div>
+        <div class="grid-price">RM 168,000</div>
+      </div>
+    </div>
+
+    <div class="grid-card fade-in" onclick="showToast('FULL LISTING VIEW — COMING SOON')">
+      <img src="https://images.unsplash.com/photo-1527515545081-5db817172677?w=500&q=80" alt="Cherokee">
+      <div class="grid-info">
+        <div class="grid-year">1998 · PERAK</div>
+        <div class="grid-name">CHEROKEE XJ</div>
+        <div class="grid-price">RM 28,500</div>
+      </div>
+    </div>
+
+    <div class="grid-card fade-in" onclick="showToast('FULL LISTING VIEW — COMING SOON')">
+      <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=500&q=80" alt="Pajero">
+      <div class="grid-info">
+        <div class="grid-year">2019 · SABAH</div>
+        <div class="grid-name">PAJERO SPORT</div>
+        <div class="grid-price">RM 88,000</div>
+      </div>
+    </div>
+
+    <div class="grid-card wide fade-in" onclick="showToast('FULL LISTING VIEW — COMING SOON')">
+      <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80" alt="Wrangler TJ">
+      <div class="grid-info">
+        <div class="grid-year">2005 · SELANGOR</div>
+        <div class="grid-name">WRANGLER TJ SPORT</div>
+        <div class="grid-price">RM 62,000</div>
+      </div>
+    </div>
+
+    <div class="grid-card fade-in" onclick="showToast('FULL LISTING VIEW — COMING SOON')">
+      <img src="https://images.unsplash.com/photo-1504215680853-026ed2a45def?w=500&q=80" alt="Hilux Surf">
+      <div class="grid-info">
+        <div class="grid-year">1996 · KEDAH</div>
+        <div class="grid-name">HILUX SURF</div>
+        <div class="grid-price">RM 34,000</div>
+      </div>
+    </div>
+
+    <div class="grid-card fade-in" onclick="showToast('FULL LISTING VIEW — COMING SOON')">
+      <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=500&q=80" alt="GX470">
+      <div class="grid-info">
+        <div class="grid-year">2007 · JOHOR</div>
+        <div class="grid-name">LEXUS GX470</div>
+        <div class="grid-price">RM 78,000</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="load-more">
+  <button class="load-more-btn" onclick="showToast('MORE LISTINGS LOADING SOON')">LOAD MORE RIDES</button>
+</div>
+
+<div class="bottom-spacer"></div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="nav-item active">
+    <span class="nav-icon">⊞</span>
+    <span class="nav-label">Browse</span>
+  </div>
+  <div class="nav-item" onclick="showToast('SEARCH — COMING SOON')">
+    <span class="nav-icon">◎</span>
+    <span class="nav-label">Search</span>
+  </div>
+  <div class="nav-item" onclick="showToast('SAVED — COMING SOON')">
+    <span class="nav-icon">♡</span>
+    <span class="nav-label">Saved</span>
+  </div>
+  <div class="nav-item" onclick="showToast('PROFILE — COMING SOON')">
+    <span class="nav-icon">◉</span>
+    <span class="nav-label">Profile</span>
+  </div>
+</nav>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  function filterBy(el, type) {
+    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    showToast('FILTER: ' + el.textContent);
+  }
+</script>
+
+</body>
+</html>
