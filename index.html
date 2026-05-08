@@ -3,23 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHECKMYRIDE.MY</title>
+<title>CheckMyRide.MY — Jeep & 4x4 Culture Malaysia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;700;900&family=DM+Serif+Display:ital@0;1&family=Suisse+Int%27l:wght@300;400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Fraunces:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
-    --black: #0a0a0a;
-    --white: #fafaf8;
-    --gray-100: #f0f0ee;
-    --gray-200: #e0e0dc;
-    --gray-400: #999990;
-    --gray-600: #555550;
-    --gray-800: #2a2a28;
-    --serif: 'DM Serif Display', 'Noto Serif JP', Georgia, serif;
-    --mono: 'Space Mono', 'Courier New', monospace;
-    --sans: 'Noto Serif JP', serif;
+    --black: #0a0a09;
+    --off-black: #111110;
+    --panel: #161614;
+    --border: #2a2a26;
+    --muted: #3a3a36;
+    --text-dim: #6b6b64;
+    --text-mid: #9a9a8e;
+    --text: #d4d4c8;
+    --white: #f0f0e8;
+    --accent: #c8a84b;
+    --accent-dim: #8a7234;
+    --accent-glow: rgba(200,168,75,0.12);
+    --red: #c84b4b;
+    --green: #4bc87a;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,1383 +29,1472 @@
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--white);
-    color: var(--black);
-    font-family: var(--sans);
-    font-weight: 300;
-    overflow-x: hidden;
-  }
-
-  /* ── HEADER ── */
-  header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: var(--white);
-    border-bottom: 1px solid var(--black);
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    padding: 0 2rem;
-    height: 56px;
-  }
-
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-  }
-
-  .header-left span {
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    color: var(--gray-400);
-    text-transform: uppercase;
-  }
-
-  .logo {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    text-align: center;
-  }
-
-  .logo-jp {
-    display: block;
-    font-family: 'Noto Serif JP', serif;
-    font-size: 0.55rem;
-    font-weight: 200;
-    letter-spacing: 0.4em;
-    color: var(--gray-400);
-    margin-top: 2px;
-  }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 1.5rem;
-  }
-
-  .header-right button {
-    background: none;
-    border: none;
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-    color: var(--gray-600);
-    transition: color 0.2s;
-  }
-
-  .header-right button:hover { color: var(--black); }
-
-  .btn-list {
-    background: var(--black) !important;
-    color: var(--white) !important;
-    padding: 0.4rem 0.9rem !important;
-    border: 1px solid var(--black) !important;
-    transition: all 0.2s !important;
-  }
-
-  .btn-list:hover {
-    background: var(--white) !important;
-    color: var(--black) !important;
-  }
-
-  /* ── TICKER ── */
-  .ticker-wrap {
-    position: fixed;
-    top: 56px; left: 0; right: 0;
-    z-index: 99;
     background: var(--black);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* TICKER */
+  .ticker-wrap {
+    background: var(--accent);
     overflow: hidden;
     height: 28px;
     display: flex;
     align-items: center;
   }
-
-  .ticker-track {
+  .ticker-inner {
     display: flex;
+    gap: 0;
     white-space: nowrap;
-    animation: ticker 30s linear infinite;
+    animation: ticker 35s linear infinite;
   }
-
-  .ticker-track span {
-    font-family: var(--mono);
-    font-size: 0.55rem;
-    letter-spacing: 0.2em;
-    color: var(--white);
-    padding: 0 2rem;
-    text-transform: uppercase;
+  .ticker-item {
+    color: var(--black);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
-
-  .ticker-track span.dot {
-    color: var(--gray-400);
-    padding: 0;
-  }
-
+  .ticker-dot { width: 4px; height: 4px; background: var(--black); border-radius: 50%; opacity: 0.5; }
   @keyframes ticker {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
   }
 
-  /* ── HERO SECTION ── */
-  .hero {
-    margin-top: 84px;
-    padding: 4rem 2rem 2rem;
-    border-bottom: 1px solid var(--gray-200);
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,9,0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .header-inner {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: end;
-    gap: 2rem;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 0 32px;
+    height: 64px;
   }
-
-  .hero-label {
-    font-family: var(--mono);
-    font-size: 0.55rem;
-    letter-spacing: 0.3em;
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .header-left a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--gray-400);
-    margin-bottom: 0.75rem;
+    transition: color 0.2s;
   }
-
-  .hero-title {
-    font-family: var(--serif);
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    font-weight: 400;
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
-
-  .hero-title em {
-    font-style: italic;
-    color: var(--gray-600);
-  }
-
-  .hero-title-jp {
-    font-family: 'Noto Serif JP', serif;
-    font-size: clamp(1rem, 2vw, 1.8rem);
-    font-weight: 200;
-    color: var(--gray-400);
+  .header-left a:hover { color: var(--accent); }
+  .logo {
+    text-align: center;
+    text-decoration: none;
     display: block;
-    margin-top: 0.5rem;
-    letter-spacing: 0.3em;
   }
+  .logo-main {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.15em;
+    color: var(--white);
+    line-height: 1;
+  }
+  .logo-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+  }
+  .btn-list {
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    cursor: crosshair;
+    transition: all 0.2s;
+  }
+  .btn-list:hover { background: var(--white); }
+  .icon-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: crosshair;
+    transition: all 0.2s;
+    font-size: 14px;
+  }
+  .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-  .hero-right {
+  /* HERO */
+  .hero {
+    position: relative;
+    height: 85vh;
+    min-height: 560px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=1600&q=85');
+    background-size: cover;
+    background-position: center 40%;
+    filter: brightness(0.35) saturate(0.8);
+    transition: transform 0.1s ease-out;
+  }
+  .hero-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 20%,
+      rgba(10,10,9,0.4) 50%,
+      var(--black) 100%
+    );
+  }
+  .hero-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,168,75,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,168,75,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 48px 56px;
+    width: 100%;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: var(--black);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 5px 12px;
+    margin-bottom: 20px;
+  }
+  .hero-tag-dot { width: 5px; height: 5px; background: var(--black); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 10vw, 128px);
+    line-height: 0.9;
+    color: var(--white);
+    letter-spacing: 0.02em;
+    margin-bottom: 24px;
+  }
+  .hero-title span { color: var(--accent); }
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .hero-stat {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 1rem;
+    gap: 2px;
   }
-
-  .hero-stat {
-    text-align: right;
-  }
-
   .hero-stat-num {
-    font-family: var(--serif);
-    font-size: 3rem;
-    font-weight: 400;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--white);
     line-height: 1;
   }
-
   .hero-stat-label {
-    font-family: var(--mono);
-    font-size: 0.55rem;
+    font-size: 9px;
     letter-spacing: 0.2em;
+    color: var(--text-dim);
     text-transform: uppercase;
-    color: var(--gray-400);
   }
+  .hero-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--border);
+  }
+  .hero-cta {
+    margin-left: auto;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    cursor: crosshair;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--white); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    cursor: crosshair;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* ── FILTER BAR ── */
+  /* FILTER BAR */
   .filter-bar {
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
     display: flex;
     align-items: center;
     gap: 0;
-    padding: 0 2rem;
-    border-bottom: 1px solid var(--gray-200);
     overflow-x: auto;
     scrollbar-width: none;
-    background: var(--white);
   }
-
   .filter-bar::-webkit-scrollbar { display: none; }
-
-  .filter-btn {
+  .filter-tab {
     background: none;
     border: none;
-    border-right: 1px solid var(--gray-200);
-    padding: 0.9rem 1.5rem;
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
+    border-bottom: 2px solid transparent;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    cursor: pointer;
-    color: var(--gray-400);
-    white-space: nowrap;
+    padding: 16px 20px;
+    cursor: crosshair;
     transition: all 0.2s;
+    white-space: nowrap;
     position: relative;
+    top: 1px;
+  }
+  .filter-tab:hover { color: var(--text); }
+  .filter-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .filter-sep { width: 1px; height: 16px; background: var(--border); margin: 0 8px; flex-shrink: 0; }
+  .filter-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-left: 24px;
+    border-left: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .sort-select {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    cursor: crosshair;
+    appearance: none;
+    padding-right: 16px;
+  }
+  .sort-select option { background: var(--panel); }
+  .view-toggle {
+    display: flex;
+    gap: 4px;
+  }
+  .view-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 6px 8px;
+    cursor: crosshair;
+    font-size: 12px;
+    transition: all 0.2s;
+  }
+  .view-btn.active { border-color: var(--accent); color: var(--accent); }
+
+  /* MAIN LAYOUT */
+  .main {
+    padding: 40px 32px;
+    max-width: 1440px;
+    margin: 0 auto;
   }
 
-  .filter-btn:first-child { border-left: 1px solid var(--gray-200); }
-
-  .filter-btn.active {
-    color: var(--black);
-    background: var(--black);
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.05em;
     color: var(--white);
   }
-
-  .filter-btn:hover:not(.active) { color: var(--black); }
-
-  /* ── MAIN FEED ── */
-  .feed {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 2rem 6rem;
+  .section-count {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    border: 1px solid var(--border);
+    padding: 3px 10px;
   }
+  .section-action {
+    margin-left: auto;
+    font-size: 10px;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .section-action:hover { color: var(--white); }
 
-  /* ── RIDE CARD ── */
-  .ride-card {
+  /* FEATURED CARD */
+  .featured-grid {
     display: grid;
-    grid-template-columns: 45% 55%;
-    border-bottom: 1px solid var(--gray-200);
-    min-height: 320px;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.5s ease forwards;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 48px;
   }
-
-  .ride-card:nth-child(1) { animation-delay: 0.05s; }
-  .ride-card:nth-child(2) { animation-delay: 0.1s; }
-  .ride-card:nth-child(3) { animation-delay: 0.15s; }
-  .ride-card:nth-child(4) { animation-delay: 0.2s; }
-  .ride-card:nth-child(5) { animation-delay: 0.25s; }
-  .ride-card:nth-child(6) { animation-delay: 0.3s; }
-  .ride-card:nth-child(7) { animation-delay: 0.35s; }
-  .ride-card:nth-child(8) { animation-delay: 0.4s; }
-  .ride-card:nth-child(9) { animation-delay: 0.45s; }
-
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .card-img-wrap {
+  .featured-main {
     position: relative;
+    aspect-ratio: 16/10;
     overflow: hidden;
-    border-right: 1px solid var(--gray-200);
+    background: var(--panel);
+    cursor: crosshair;
   }
-
-  .card-img-wrap img {
+  .featured-main img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
-    transition: transform 0.6s ease;
-    filter: grayscale(15%);
+    filter: brightness(0.7) saturate(0.9);
+    transition: transform 0.6s ease, filter 0.4s;
   }
-
-  .ride-card:hover .card-img-wrap img {
-    transform: scale(1.03);
-  }
-
-  .card-badge {
+  .featured-main:hover img { transform: scale(1.04); filter: brightness(0.55) saturate(0.9); }
+  .featured-main-overlay {
     position: absolute;
-    top: 1rem;
-    left: 1rem;
-    font-family: var(--mono);
-    font-size: 0.5rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    background: var(--black);
-    color: var(--white);
-    padding: 0.25rem 0.5rem;
-  }
-
-  .card-index {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    font-family: var(--serif);
-    font-size: 2rem;
-    color: rgba(255,255,255,0.3);
-    line-height: 1;
-  }
-
-  /* ── CARD SPECS ── */
-  .card-specs {
-    padding: 2rem 2rem 2rem 2.5rem;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,9,0.9) 0%, transparent 50%);
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
+    padding: 28px;
+  }
+  .featured-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent);
+    color: var(--black);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    font-weight: 500;
+    padding: 4px 10px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    width: fit-content;
+  }
+  .featured-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    line-height: 0.95;
+    color: var(--white);
+    letter-spacing: 0.03em;
+    margin-bottom: 12px;
+  }
+  .featured-sub {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .featured-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+  .featured-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 3px 8px;
+    color: var(--text-dim);
+  }
+  .tag.highlight { border-color: var(--accent-dim); color: var(--accent); }
+  .featured-side {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px;
+  }
+  .featured-side-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--panel);
+    cursor: crosshair;
+  }
+  .featured-side-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6) saturate(0.85);
+    transition: transform 0.6s ease, filter 0.4s;
+    display: block;
+  }
+  .featured-side-card:hover img { transform: scale(1.05); filter: brightness(0.45) saturate(0.85); }
+  .side-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,9,0.85) 0%, transparent 55%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+  }
+  .side-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--white);
+    letter-spacing: 0.03em;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .side-meta {
+    display: flex;
+    align-items: center;
     justify-content: space-between;
   }
-
-  .card-header {}
-
-  .card-meta {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 0.75rem;
+  .side-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
   }
-
-  .card-year {
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    color: var(--gray-400);
-  }
-
-  .card-location {
-    font-family: var(--mono);
-    font-size: 0.6rem;
+  .side-loc {
+    font-size: 9px;
+    color: var(--text-dim);
     letter-spacing: 0.1em;
-    color: var(--gray-400);
+    text-transform: uppercase;
+  }
+
+  /* RIDE GRID */
+  .rides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .ride-card {
+    background: #ffffff;
+    border: 1px solid #ebebeb;
+    border-radius: 4px;
+    cursor: crosshair;
+    transition: box-shadow 0.25s, transform 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .ride-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+    transform: translateY(-2px);
+  }
+  .ride-card:hover .ride-img { transform: scale(1.04); }
+  .ride-card:hover .ride-actions { opacity: 1; }
+  .ride-img-wrap {
+    position: relative;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    background: #f5f5f3;
+    border-bottom: 1px solid #ebebeb;
+  }
+  .ride-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: none;
+    transition: transform 0.5s ease;
+    display: block;
+  }
+  .ride-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .ride-action-btn {
+    background: rgba(255,255,255,0.92);
+    border: 1px solid #e0e0e0;
+    color: #555;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    gap: 0.3rem;
+    justify-content: center;
+    cursor: crosshair;
+    font-size: 13px;
+    transition: all 0.2s;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   }
-
-  .card-location::before {
-    content: '///';
-    color: var(--gray-200);
+  .ride-action-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .ride-badges {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 4px;
   }
-
-  .card-title {
-    font-family: var(--serif);
-    font-size: clamp(1.4rem, 2.5vw, 2rem);
-    font-weight: 400;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-    margin-bottom: 0.25rem;
+  .badge {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    font-weight: 500;
+    border-radius: 2px;
   }
-
-  .card-subtitle {
-    font-family: 'Noto Serif JP', serif;
-    font-size: 0.7rem;
-    font-weight: 200;
-    color: var(--gray-400);
-    letter-spacing: 0.3em;
-    margin-bottom: 1.5rem;
+  .badge-era { background: rgba(255,255,255,0.88); color: #666; border: 1px solid #ddd; backdrop-filter: blur(4px); }
+  .badge-mod { background: var(--accent); color: #fff; }
+  .badge-new { background: var(--green); color: #fff; }
+  .ride-body {
+    padding: 14px 16px 16px;
+    background: #fff;
   }
-
-  /* ── SPEC TABLE ── */
-  .spec-table {
+  .ride-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .ride-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: #111;
+    letter-spacing: 0.03em;
+    line-height: 1;
+  }
+  .ride-year {
+    font-size: 10px;
+    color: var(--accent-dim);
+    letter-spacing: 0.1em;
+    margin-top: 2px;
+  }
+  .ride-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: #111;
+    letter-spacing: 0.03em;
+  }
+  .ride-specs {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0;
-    border-top: 1px solid var(--gray-200);
-    border-left: 1px solid var(--gray-200);
-    margin-bottom: 1.5rem;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    background: #f8f8f6;
+    border: 1px solid #eee;
+    border-radius: 3px;
   }
-
-  .spec-row {
-    border-right: 1px solid var(--gray-200);
-    border-bottom: 1px solid var(--gray-200);
-    padding: 0.6rem 0.75rem;
+  .spec-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
   }
-
   .spec-label {
-    font-family: var(--mono);
-    font-size: 0.48rem;
-    letter-spacing: 0.2em;
+    font-size: 8px;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--gray-400);
-    margin-bottom: 0.2rem;
+    color: #aaa;
   }
-
-  .spec-value {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: var(--black);
+  .spec-val {
+    font-size: 11px;
+    color: #333;
+    letter-spacing: 0.03em;
+  }
+  .ride-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+  }
+  .ride-location {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 9px;
+    color: #999;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .loc-dot { width: 4px; height: 4px; background: var(--accent); border-radius: 50%; }
+  .ride-views {
+    font-size: 9px;
+    color: #bbb;
     letter-spacing: 0.05em;
   }
 
-  /* ── TAGS ── */
-  .card-tags {
+  /* LOAD MORE */
+  .load-more-wrap {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-bottom: 1.5rem;
+    align-items: center;
+    gap: 24px;
+    margin: 40px 0;
   }
-
-  .tag {
-    font-family: var(--mono);
-    font-size: 0.5rem;
+  .load-line { flex: 1; height: 1px; background: var(--border); }
+  .btn-load {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    border: 1px solid var(--gray-200);
-    padding: 0.2rem 0.6rem;
-    color: var(--gray-600);
-  }
-
-  /* ── CARD FOOTER ── */
-  .card-footer {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-  }
-
-  .card-price {
-    font-family: var(--serif);
-    font-size: clamp(1.5rem, 2.5vw, 2.2rem);
-    font-weight: 400;
-    line-height: 1;
-  }
-
-  .card-price-label {
-    font-family: var(--mono);
-    font-size: 0.5rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gray-400);
-    margin-bottom: 0.25rem;
-  }
-
-  .card-actions {
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  .btn-save {
-    width: 36px;
-    height: 36px;
-    border: 1px solid var(--gray-200);
-    background: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
+    padding: 12px 28px;
+    cursor: crosshair;
     transition: all 0.2s;
-    color: var(--gray-400);
-  }
-
-  .btn-save:hover {
-    border-color: var(--black);
-    color: var(--black);
-  }
-
-  .btn-view {
-    font-family: var(--mono);
-    font-size: 0.55rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    border: 1px solid var(--black);
-    background: none;
-    padding: 0 1.2rem;
-    height: 36px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .btn-view:hover {
-    background: var(--black);
-    color: var(--white);
-  }
-
-  /* ── SECTION DIVIDER ── */
-  .section-divider {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 1.5rem 0;
-    border-bottom: 1px solid var(--gray-200);
-    margin-bottom: 0;
-  }
-
-  .divider-label {
-    font-family: var(--mono);
-    font-size: 0.55rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gray-400);
     white-space: nowrap;
   }
+  .btn-load:hover { border-color: var(--accent); color: var(--accent); }
 
-  .divider-line {
-    flex: 1;
-    height: 1px;
-    background: var(--gray-200);
+  /* STATS BAR */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--border);
+    margin-bottom: 48px;
   }
-
-  .divider-count {
-    font-family: var(--serif);
-    font-size: 1rem;
-    color: var(--gray-400);
+  .stat-cell {
+    padding: 28px 24px;
+    border-right: 1px solid var(--border);
+    position: relative;
   }
-
-  /* ── LOAD MORE ── */
-  .load-more-wrap {
-    padding: 3rem 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .btn-load {
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    border: 1px solid var(--black);
-    background: none;
-    padding: 1rem 3rem;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .btn-load:hover {
-    background: var(--black);
+  .stat-cell:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px;
     color: var(--white);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-desc { font-size: 10px; color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase; }
+  .stat-trend {
+    position: absolute;
+    top: 28px;
+    right: 24px;
+    font-size: 9px;
+    color: var(--green);
+    letter-spacing: 0.08em;
   }
 
-  /* ── BOTTOM NAV ── */
+  /* BOTTOM NAV */
   .bottom-nav {
+    display: none;
     position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: var(--white);
-    border-top: 1px solid var(--black);
-    display: flex;
-    height: 56px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10,10,9,0.96);
+    border-top: 1px solid var(--border);
+    backdrop-filter: blur(16px);
     z-index: 100;
+    padding: 0 8px;
+    padding-bottom: env(safe-area-inset-bottom);
   }
-
+  .bottom-nav-inner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 56px;
+  }
   .nav-item {
-    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 4px;
-    background: none;
-    border: none;
-    border-right: 1px solid var(--gray-200);
-    cursor: pointer;
-    font-family: var(--mono);
-    font-size: 0.48rem;
-    letter-spacing: 0.15em;
+    gap: 3px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 8px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--gray-400);
-    transition: all 0.2s;
+    cursor: crosshair;
+    transition: color 0.2s;
+    flex: 1;
+    padding: 8px 0;
+  }
+  .nav-item.active { color: var(--accent); }
+  .nav-item svg { width: 18px; height: 18px; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: gap;
+    gap: 16px;
+    margin-bottom: 70px;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+  }
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-copy {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
   }
 
-  .nav-item:last-child { border-right: none; }
-  .nav-item.active { color: var(--black); }
-  .nav-item:hover { color: var(--black); }
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-content > * {
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-tag { animation-delay: 0.1s; }
+  .hero-title { animation-delay: 0.2s; }
+  .hero-meta { animation-delay: 0.35s; }
 
-  .nav-icon {
-    font-size: 1rem;
-    line-height: 1;
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .header-inner { grid-template-columns: auto 1fr; padding: 0 16px; }
+    .header-left, .header-right { display: none; }
+    .logo { text-align: left; }
+    .hero { height: 70vh; }
+    .hero-content { padding: 0 20px 80px; }
+    .hero-title { font-size: clamp(48px, 14vw, 80px); }
+    .hero-cta { display: none; }
+    .hero-divider { display: none; }
+    .filter-bar { padding: 0 16px; }
+    .main { padding: 24px 16px; }
+    .featured-grid { grid-template-columns: 1fr; }
+    .featured-side { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
+    .featured-side-card { aspect-ratio: 4/3; }
+    .rides-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+    .stat-cell:nth-child(2) { border-right: none; }
+    .stat-cell:nth-child(3) { border-top: 1px solid var(--border); }
+    footer { flex-direction: column; gap: 16px; margin-bottom: 80px; }
+    .bottom-nav { display: block; }
   }
 
-  /* ── SEARCH OVERLAY ── */
+  @media (max-width: 480px) {
+    .rides-grid { grid-template-columns: 1fr; }
+    .featured-side { grid-template-columns: 1fr; }
+  }
+
+  /* SEARCH OVERLAY */
   .search-overlay {
     position: fixed;
     inset: 0;
-    background: var(--white);
+    background: rgba(10,10,9,0.97);
     z-index: 200;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s;
   }
-
-  .search-overlay.open {
-    opacity: 1;
-    pointer-events: all;
+  .search-overlay.open { opacity: 1; pointer-events: all; }
+  .search-input-wrap {
+    width: 100%;
+    max-width: 640px;
+    padding: 0 24px;
+    position: relative;
   }
-
-  .search-header {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid var(--black);
-    padding: 0 2rem;
-    height: 56px;
-    gap: 1rem;
-  }
-
   .search-input {
-    flex: 1;
-    border: none;
-    outline: none;
-    font-family: var(--serif);
-    font-size: 1.2rem;
-    background: transparent;
-  }
-
-  .search-close {
+    width: 100%;
     background: none;
     border: none;
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    cursor: pointer;
+    border-bottom: 2px solid var(--accent);
+    color: var(--white);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    letter-spacing: 0.05em;
+    padding: 16px 0;
+    outline: none;
+    caret-color: var(--accent);
+  }
+  .search-input::placeholder { color: var(--muted); }
+  .search-hint {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--gray-400);
+    margin-top: 16px;
+    text-align: center;
   }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 640px) {
-    .hero { grid-template-columns: 1fr; }
-    .hero-right { align-items: flex-start; flex-direction: row; }
-    .ride-card { grid-template-columns: 1fr; min-height: auto; }
-    .card-img-wrap { height: 240px; border-right: none; border-bottom: 1px solid var(--gray-200); }
-    .card-specs { padding: 1.5rem; }
-    header { padding: 0 1rem; }
-    .hero { padding: 3rem 1rem 1.5rem; }
-    .filter-bar { padding: 0 1rem; }
-    .feed { padding: 0 1rem 6rem; }
+  .search-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 8px 14px;
+    cursor: crosshair;
+    transition: all 0.2s;
   }
+  .search-close:hover { border-color: var(--accent); color: var(--accent); }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-  <div class="header-left">
-    <span>MY · 马来西亚</span>
-    <span id="live-count">24 RIDES</span>
-  </div>
-  <div class="logo">
-    CHECKMYRIDE.MY
-    <span class="logo-jp">ジープ文化マレーシア</span>
-  </div>
-  <div class="header-right">
-    <button>SEARCH</button>
-    <button>SAVED ♡</button>
-    <button class="btn-list">+ LIST YOURS</button>
-  </div>
-</header>
-
-<!-- TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker-track" id="ticker">
-    <span>Wrangler JK 2014 · Selangor</span>
-    <span class="dot"> · · · </span>
-    <span>Land Cruiser FJ40 1979 · Johor</span>
-    <span class="dot"> · · · </span>
-    <span>Defender 90 2001 · KL</span>
-    <span class="dot"> · · · </span>
-    <span>Jimny Sierra 2023 · Penang</span>
-    <span class="dot"> · · · </span>
-    <span>Pajero Sport 2019 · Sabah</span>
-    <span class="dot"> · · · </span>
-    <span>Cherokee XJ 1998 · Perak</span>
-    <span class="dot"> · · · </span>
-    <span>Hilux Surf 1996 · Kedah</span>
-    <span class="dot"> · · · </span>
-    <span>GX470 2007 · Johor</span>
-    <span class="dot"> · · · </span>
-    <span>Wrangler JK 2014 · Selangor</span>
-    <span class="dot"> · · · </span>
-    <span>Land Cruiser FJ40 1979 · Johor</span>
-    <span class="dot"> · · · </span>
-    <span>Defender 90 2001 · KL</span>
-    <span class="dot"> · · · </span>
-    <span>Jimny Sierra 2023 · Penang</span>
-    <span class="dot"> · · · </span>
-    <span>Pajero Sport 2019 · Sabah</span>
-    <span class="dot"> · · · </span>
-    <span>Cherokee XJ 1998 · Perak</span>
-    <span class="dot"> · · · </span>
-    <span>Hilux Surf 1996 · Kedah</span>
-    <span class="dot"> · · · </span>
-    <span>GX470 2007 · Johor</span>
-    <span class="dot"> · · · </span>
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <button class="search-close" onclick="closeSearch()">ESC / CLOSE</button>
+  <div class="search-input-wrap">
+    <input class="search-input" placeholder="SEARCH RIDES..." type="text" id="searchInput" autocomplete="off">
+    <div class="search-hint">try: wrangler · defender · classic · under rm50k · modified</div>
   </div>
 </div>
 
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <!-- doubled for seamless loop -->
+    <span class="ticker-item">TERKINI<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Wrangler JK 2014 · Selangor · RM 94,500<span class="ticker-dot"></span></span>
+    <span class="ticker-item">FJ40 1979 · Johor · RM 95,000<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Defender 90 2001 · KL · RM 112,000<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Jimny Sierra 2023 · Penang · RM 168,000<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Pajero Sport 2019 · Sabah · RM 88,000<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Cherokee XJ 1998 · Perak · RM 28,500<span class="ticker-dot"></span></span>
+    <!-- repeat -->
+    <span class="ticker-item">TERKINI<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Wrangler JK 2014 · Selangor · RM 94,500<span class="ticker-dot"></span></span>
+    <span class="ticker-item">FJ40 1979 · Johor · RM 95,000<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Defender 90 2001 · KL · RM 112,000<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Jimny Sierra 2023 · Penang · RM 168,000<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Pajero Sport 2019 · Sabah · RM 88,000<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Cherokee XJ 1998 · Perak · RM 28,500<span class="ticker-dot"></span></span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="#">Marketplace</a>
+      <a href="#">Community</a>
+      <a href="#">Events</a>
+    </div>
+    <a href="#" class="logo">
+      <div class="logo-main">CheckMyRide.MY</div>
+      <div class="logo-sub">Jeep &amp; 4×4 Culture Malaysia</div>
+    </a>
+    <div class="header-right">
+      <button class="icon-btn" onclick="openSearch()" title="Search">⌕</button>
+      <button class="icon-btn" title="Saved">♡</button>
+      <button class="btn-list">+ List Yours</button>
+    </div>
+  </div>
+</header>
+
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-left">
-    <div class="hero-label">Vol. 01 · May 2026 · MY Edition</div>
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-gradient"></div>
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span class="hero-tag-dot"></span>
+      LIVE MARKETPLACE · 24 LISTINGS ACTIVE
+    </div>
     <h1 class="hero-title">
-      Off-Road<br>
-      <em>Culture</em><br>
-      Malaysia
-      <span class="hero-title-jp">四駆文化 · 真正</span>
+      THE ONLY<br>
+      <span>4×4</span> MARKET<br>
+      YOU NEED
     </h1>
-  </div>
-  <div class="hero-right">
-    <div class="hero-stat">
-      <div class="hero-stat-num">24</div>
-      <div class="hero-stat-label">Active Listings</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">8</div>
-      <div class="hero-stat-label">States Represented</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">1965</div>
-      <div class="hero-stat-label">Oldest on Platform</div>
+    <div class="hero-meta">
+      <div class="hero-stat">
+        <div class="hero-stat-num">247</div>
+        <div class="hero-stat-label">Total Rides</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">13</div>
+        <div class="hero-stat-label">States</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">RM 28K</div>
+        <div class="hero-stat-label">Starting From</div>
+      </div>
+      <div class="hero-cta">
+        <a href="#" class="btn-ghost">Browse All</a>
+        <a href="#" class="btn-primary">+ List Yours Free</a>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- FILTER BAR -->
 <div class="filter-bar">
-  <button class="filter-btn active" onclick="filterCards(this, 'all')">ALL RIDES</button>
-  <button class="filter-btn" onclick="filterCards(this, 'classic')">CLASSIC</button>
-  <button class="filter-btn" onclick="filterCards(this, 'mid-era')">MID-ERA</button>
-  <button class="filter-btn" onclick="filterCards(this, 'modern')">MODERN</button>
-  <button class="filter-btn" onclick="filterCards(this, '4x4')">4×4 ONLY</button>
-  <button class="filter-btn" onclick="filterCards(this, 'under50')">UNDER RM50K</button>
-  <button class="filter-btn" onclick="filterCards(this, 'modified')">MODIFIED</button>
+  <button class="filter-tab active" onclick="setFilter(this)">All Rides</button>
+  <button class="filter-tab" onclick="setFilter(this)">Classic</button>
+  <button class="filter-tab" onclick="setFilter(this)">Mid-Era</button>
+  <button class="filter-tab" onclick="setFilter(this)">Modern</button>
+  <div class="filter-sep"></div>
+  <button class="filter-tab" onclick="setFilter(this)">4×4 Only</button>
+  <button class="filter-tab" onclick="setFilter(this)">Under RM 50K</button>
+  <button class="filter-tab" onclick="setFilter(this)">Modified</button>
+  <button class="filter-tab" onclick="setFilter(this)">Jeep</button>
+  <div class="filter-right">
+    <select class="sort-select">
+      <option>Latest First</option>
+      <option>Price: Low–High</option>
+      <option>Price: High–Low</option>
+      <option>Most Viewed</option>
+    </select>
+    <div class="view-toggle">
+      <button class="view-btn active">⊞</button>
+      <button class="view-btn">≡</button>
+    </div>
+  </div>
 </div>
 
-<!-- FEED -->
-<main class="feed" id="feed">
+<!-- MAIN CONTENT -->
+<main class="main">
 
-  <div class="section-divider">
-    <span class="divider-label">Featured Drop</span>
-    <div class="divider-line"></div>
-    <span class="divider-count">01</span>
+  <!-- FEATURED -->
+  <div class="section-header">
+    <div class="section-title">Featured</div>
+    <div class="section-count">3 PICKS</div>
+    <a href="#" class="section-action">View All →</a>
   </div>
 
-  <!-- CARD 1 -->
-  <article class="ride-card" data-tags="mid-era 4x4 modified">
-    <div class="card-img-wrap">
-      <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&q=80" alt="Wrangler Rubicon">
-      <div class="card-badge">★ FEATURED</div>
-      <div class="card-index">01</div>
-    </div>
-    <div class="card-specs">
-      <div class="card-header">
-        <div class="card-meta">
-          <span class="card-year">2018</span>
-          <span class="card-location">Selangor</span>
+  <div class="featured-grid">
+    <!-- Main Featured -->
+    <div class="featured-main">
+      <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=1200&q=80" alt="Wrangler Rubicon">
+      <div class="featured-main-overlay">
+        <div class="featured-badge">
+          <span class="hero-tag-dot"></span>
+          FEATURED PICK
         </div>
-        <h2 class="card-title">Wrangler<br>Rubicon JL</h2>
-        <div class="card-subtitle">ラングラー · ルビコン</div>
-      </div>
-      <div class="spec-table">
-        <div class="spec-row">
-          <div class="spec-label">Engine</div>
-          <div class="spec-value">3.6L Pentastar V6</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Power</div>
-          <div class="spec-value">285 hp / 352 Nm</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Drivetrain</div>
-          <div class="spec-value">4WD Dana 44</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Gearbox</div>
-          <div class="spec-value">8-Speed Auto</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Mileage</div>
-          <div class="spec-value">87,000 km</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Axle Ratio</div>
-          <div class="spec-value">4.10 Rock-Trac</div>
-        </div>
-      </div>
-      <div class="card-tags">
-        <span class="tag">MID-ERA</span>
-        <span class="tag">MODIFIED</span>
-        <span class="tag">4×4</span>
-        <span class="tag">EV-SPEC LOCKERS</span>
-        <span class="tag">LIFT KIT</span>
-      </div>
-      <div class="card-footer">
-        <div>
-          <div class="card-price-label">Asking Price</div>
-          <div class="card-price">RM 148,000</div>
-        </div>
-        <div class="card-actions">
-          <button class="btn-save">♡</button>
-          <button class="btn-view">VIEW RIDE</button>
+        <div class="featured-name">Wrangler<br>Rubicon</div>
+        <div class="featured-sub">
+          <div class="featured-price">RM 148,000</div>
+          <div class="featured-tags">
+            <span class="tag">2018</span>
+            <span class="tag">3.6L V6</span>
+            <span class="tag highlight">Modified</span>
+            <span class="tag">Selangor</span>
+          </div>
         </div>
       </div>
     </div>
-  </article>
 
-  <div class="section-divider">
-    <span class="divider-label">Latest Drops</span>
-    <div class="divider-line"></div>
-    <span class="divider-count">24 Listings</span>
+    <!-- Side -->
+    <div class="featured-side">
+      <div class="featured-side-card">
+        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80" alt="FJ40">
+        <div class="side-overlay">
+          <div class="side-name">FJ40 Land Cruiser</div>
+          <div class="side-meta">
+            <div class="side-price">RM 95,000</div>
+            <div class="side-loc">1979 · Johor</div>
+          </div>
+        </div>
+      </div>
+      <div class="featured-side-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Defender">
+        <div class="side-overlay">
+          <div class="side-name">Defender 90</div>
+          <div class="side-meta">
+            <div class="side-price">RM 112,000</div>
+            <div class="side-loc">2001 · KL</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- CARD 2 -->
-  <article class="ride-card" data-tags="classic 4x4">
-    <div class="card-img-wrap">
-      <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80" alt="FJ40">
-      <div class="card-index">02</div>
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-cell">
+      <div class="stat-num">247<span>+</span></div>
+      <div class="stat-desc">Active Listings</div>
+      <div class="stat-trend">↑ 12 this week</div>
     </div>
-    <div class="card-specs">
-      <div class="card-header">
-        <div class="card-meta">
-          <span class="card-year">1979</span>
-          <span class="card-location">Johor</span>
-        </div>
-        <h2 class="card-title">FJ40<br>Land Cruiser</h2>
-        <div class="card-subtitle">ランドクルーザー · 40系</div>
-      </div>
-      <div class="spec-table">
-        <div class="spec-row">
-          <div class="spec-label">Engine</div>
-          <div class="spec-value">2F 4.2L I6 Petrol</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Power</div>
-          <div class="spec-value">135 hp / 270 Nm</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Drivetrain</div>
-          <div class="spec-value">Part-Time 4WD</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Gearbox</div>
-          <div class="spec-value">4-Speed Manual</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Body Style</div>
-          <div class="spec-value">Soft Top</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Condition</div>
-          <div class="spec-value">Restored</div>
-        </div>
-      </div>
-      <div class="card-tags">
-        <span class="tag">CLASSIC</span>
-        <span class="tag">4×4</span>
-        <span class="tag">COLLECTOR</span>
-        <span class="tag">RESTORED</span>
-      </div>
-      <div class="card-footer">
-        <div>
-          <div class="card-price-label">Asking Price</div>
-          <div class="card-price">RM 95,000</div>
-        </div>
-        <div class="card-actions">
-          <button class="btn-save">♡</button>
-          <button class="btn-view">VIEW RIDE</button>
-        </div>
-      </div>
+    <div class="stat-cell">
+      <div class="stat-num">13</div>
+      <div class="stat-desc">States Covered</div>
     </div>
-  </article>
+    <div class="stat-cell">
+      <div class="stat-num">RM<span>28K</span></div>
+      <div class="stat-desc">Lowest Price</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">4<span>×4</span></div>
+      <div class="stat-desc">Culture Only</div>
+    </div>
+  </div>
 
-  <!-- CARD 3 -->
-  <article class="ride-card" data-tags="mid-era 4x4">
-    <div class="card-img-wrap">
-      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Defender 90">
-      <div class="card-index">03</div>
-    </div>
-    <div class="card-specs">
-      <div class="card-header">
-        <div class="card-meta">
-          <span class="card-year">2001</span>
-          <span class="card-location">Kuala Lumpur</span>
-        </div>
-        <h2 class="card-title">Defender 90<br>Td5</h2>
-        <div class="card-subtitle">ディフェンダー · 90</div>
-      </div>
-      <div class="spec-table">
-        <div class="spec-row">
-          <div class="spec-label">Engine</div>
-          <div class="spec-value">2.5L Td5 Diesel</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Power</div>
-          <div class="spec-value">122 hp / 300 Nm</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Drivetrain</div>
-          <div class="spec-value">Permanent 4WD</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Gearbox</div>
-          <div class="spec-value">5-Speed Manual</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Wheelbase</div>
-          <div class="spec-value">92.9 in (SWB)</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Doors</div>
-          <div class="spec-value">2-Door Hard Top</div>
-        </div>
-      </div>
-      <div class="card-tags">
-        <span class="tag">MID-ERA</span>
-        <span class="tag">4×4</span>
-        <span class="tag">DIESEL</span>
-        <span class="tag">ICONIC</span>
-      </div>
-      <div class="card-footer">
-        <div>
-          <div class="card-price-label">Asking Price</div>
-          <div class="card-price">RM 112,000</div>
-        </div>
-        <div class="card-actions">
-          <button class="btn-save">♡</button>
-          <button class="btn-view">VIEW RIDE</button>
-        </div>
-      </div>
-    </div>
-  </article>
+  <!-- LATEST DROPS -->
+  <div class="section-header">
+    <div class="section-title">Latest Drops</div>
+    <div class="section-count">24 RIDES</div>
+    <a href="#" class="section-action">View All →</a>
+  </div>
 
-  <!-- CARD 4 -->
-  <article class="ride-card" data-tags="modern 4x4">
-    <div class="card-img-wrap">
-      <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80" alt="Jimny Sierra">
-      <div class="card-index">04</div>
-    </div>
-    <div class="card-specs">
-      <div class="card-header">
-        <div class="card-meta">
-          <span class="card-year">2023</span>
-          <span class="card-location">Penang</span>
-        </div>
-        <h2 class="card-title">Suzuki<br>Jimny Sierra</h2>
-        <div class="card-subtitle">スズキ · ジムニー シエラ</div>
-      </div>
-      <div class="spec-table">
-        <div class="spec-row">
-          <div class="spec-label">Engine</div>
-          <div class="spec-value">1.5L K15B I4</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Power</div>
-          <div class="spec-value">102 hp / 130 Nm</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Drivetrain</div>
-          <div class="spec-value">AllGrip Pro 4WD</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Gearbox</div>
-          <div class="spec-value">4-Speed Auto</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Approach Angle</div>
-          <div class="spec-value">37°</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Ground Clearance</div>
-          <div class="spec-value">210 mm</div>
-        </div>
-      </div>
-      <div class="card-tags">
-        <span class="tag">MODERN</span>
-        <span class="tag">4×4</span>
-        <span class="tag">LOW MILEAGE</span>
-        <span class="tag">WARRANTY</span>
-      </div>
-      <div class="card-footer">
-        <div>
-          <div class="card-price-label">Asking Price</div>
-          <div class="card-price">RM 168,000</div>
-        </div>
-        <div class="card-actions">
-          <button class="btn-save">♡</button>
-          <button class="btn-view">VIEW RIDE</button>
-        </div>
-      </div>
-    </div>
-  </article>
+  <div class="rides-grid">
 
-  <!-- CARD 5 -->
-  <article class="ride-card" data-tags="classic under50 4x4">
-    <div class="card-img-wrap">
-      <img src="https://images.unsplash.com/photo-1527515545081-5db817172677?w=800&q=80" alt="Cherokee XJ">
-      <div class="card-index">05</div>
-    </div>
-    <div class="card-specs">
-      <div class="card-header">
-        <div class="card-meta">
-          <span class="card-year">1998</span>
-          <span class="card-location">Perak</span>
+    <!-- Card 1 -->
+    <div class="ride-card">
+      <div class="ride-img-wrap">
+        <img class="ride-img" src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=600&q=80" alt="Jimny">
+        <div class="ride-actions">
+          <button class="ride-action-btn" title="Save">♡</button>
+          <button class="ride-action-btn" title="Share">↗</button>
         </div>
-        <h2 class="card-title">Jeep<br>Cherokee XJ</h2>
-        <div class="card-subtitle">チェロキー · XJ</div>
-      </div>
-      <div class="spec-table">
-        <div class="spec-row">
-          <div class="spec-label">Engine</div>
-          <div class="spec-value">4.0L AMC I6</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Power</div>
-          <div class="spec-value">190 hp / 325 Nm</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Drivetrain</div>
-          <div class="spec-value">Selec-Trac 4WD</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Gearbox</div>
-          <div class="spec-value">4-Speed Auto</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Mileage</div>
-          <div class="spec-value">142,000 km</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Condition</div>
-          <div class="spec-value">Running Good</div>
+        <div class="ride-badges">
+          <span class="badge badge-new">NEW</span>
+          <span class="badge badge-era">Modern</span>
         </div>
       </div>
-      <div class="card-tags">
-        <span class="tag">CLASSIC</span>
-        <span class="tag">UNDER RM50K</span>
-        <span class="tag">4×4</span>
-        <span class="tag">INLINE-6</span>
-      </div>
-      <div class="card-footer">
-        <div>
-          <div class="card-price-label">Asking Price</div>
-          <div class="card-price">RM 28,500</div>
+      <div class="ride-body">
+        <div class="ride-header">
+          <div>
+            <div class="ride-name">Suzuki Jimny Sierra</div>
+            <div class="ride-year">2023</div>
+          </div>
+          <div class="ride-price">RM 168K</div>
         </div>
-        <div class="card-actions">
-          <button class="btn-save">♡</button>
-          <button class="btn-view">VIEW RIDE</button>
+        <div class="ride-specs">
+          <div class="spec-item">
+            <div class="spec-label">Engine</div>
+            <div class="spec-val">1.5L K15B</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Trans</div>
+            <div class="spec-val">4-Speed Auto</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Mileage</div>
+            <div class="spec-val">12,400 km</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Condition</div>
+            <div class="spec-val">Excellent</div>
+          </div>
+        </div>
+        <div class="ride-footer">
+          <div class="ride-location"><span class="loc-dot"></span>Penang</div>
+          <div class="ride-views">234 views</div>
         </div>
       </div>
     </div>
-  </article>
 
-  <!-- CARD 6 -->
-  <article class="ride-card" data-tags="modern 4x4">
-    <div class="card-img-wrap">
-      <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=800&q=80" alt="Pajero Sport">
-      <div class="card-index">06</div>
-    </div>
-    <div class="card-specs">
-      <div class="card-header">
-        <div class="card-meta">
-          <span class="card-year">2019</span>
-          <span class="card-location">Sabah</span>
+    <!-- Card 2 -->
+    <div class="ride-card">
+      <div class="ride-img-wrap">
+        <img class="ride-img" src="https://images.unsplash.com/photo-1527515545081-5db817172677?w=600&q=80" alt="Cherokee XJ">
+        <div class="ride-actions">
+          <button class="ride-action-btn" title="Save">♡</button>
+          <button class="ride-action-btn" title="Share">↗</button>
         </div>
-        <h2 class="card-title">Mitsubishi<br>Pajero Sport</h2>
-        <div class="card-subtitle">パジェロ · スポーツ</div>
-      </div>
-      <div class="spec-table">
-        <div class="spec-row">
-          <div class="spec-label">Engine</div>
-          <div class="spec-value">2.4L MIVEC Diesel</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Power</div>
-          <div class="spec-value">181 hp / 430 Nm</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Drivetrain</div>
-          <div class="spec-value">Super Select 4WD-II</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Gearbox</div>
-          <div class="spec-value">8-Speed Auto</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Mileage</div>
-          <div class="spec-value">55,000 km</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Trim</div>
-          <div class="spec-value">GT Premium</div>
+        <div class="ride-badges">
+          <span class="badge badge-era">Classic</span>
+          <span class="badge badge-mod">Modified</span>
         </div>
       </div>
-      <div class="card-tags">
-        <span class="tag">MODERN</span>
-        <span class="tag">4×4</span>
-        <span class="tag">DIESEL</span>
-        <span class="tag">7-SEATER</span>
-      </div>
-      <div class="card-footer">
-        <div>
-          <div class="card-price-label">Asking Price</div>
-          <div class="card-price">RM 88,000</div>
+      <div class="ride-body">
+        <div class="ride-header">
+          <div>
+            <div class="ride-name">Cherokee XJ</div>
+            <div class="ride-year">1998</div>
+          </div>
+          <div class="ride-price">RM 28.5K</div>
         </div>
-        <div class="card-actions">
-          <button class="btn-save">♡</button>
-          <button class="btn-view">VIEW RIDE</button>
+        <div class="ride-specs">
+          <div class="spec-item">
+            <div class="spec-label">Engine</div>
+            <div class="spec-val">4.0L I6</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Trans</div>
+            <div class="spec-val">4-Speed Auto</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Mileage</div>
+            <div class="spec-val">187,000 km</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Condition</div>
+            <div class="spec-val">Good</div>
+          </div>
+        </div>
+        <div class="ride-footer">
+          <div class="ride-location"><span class="loc-dot"></span>Perak</div>
+          <div class="ride-views">1.2K views</div>
         </div>
       </div>
     </div>
-  </article>
 
-  <!-- CARD 7 -->
-  <article class="ride-card" data-tags="mid-era 4x4 modified">
-    <div class="card-img-wrap">
-      <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80" alt="Wrangler TJ">
-      <div class="card-index">07</div>
-    </div>
-    <div class="card-specs">
-      <div class="card-header">
-        <div class="card-meta">
-          <span class="card-year">2005</span>
-          <span class="card-location">Selangor</span>
+    <!-- Card 3 -->
+    <div class="ride-card">
+      <div class="ride-img-wrap">
+        <img class="ride-img" src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=600&q=80" alt="Pajero Sport">
+        <div class="ride-actions">
+          <button class="ride-action-btn" title="Save">♡</button>
+          <button class="ride-action-btn" title="Share">↗</button>
         </div>
-        <h2 class="card-title">Wrangler TJ<br>Sport</h2>
-        <div class="card-subtitle">ラングラー · TJ スポーツ</div>
-      </div>
-      <div class="spec-table">
-        <div class="spec-row">
-          <div class="spec-label">Engine</div>
-          <div class="spec-value">4.0L PowerTech I6</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Power</div>
-          <div class="spec-value">190 hp / 320 Nm</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Drivetrain</div>
-          <div class="spec-value">Command-Trac 4WD</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Gearbox</div>
-          <div class="spec-value">6-Speed Manual</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Lift</div>
-          <div class="spec-value">3.5 inch</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Tyres</div>
-          <div class="spec-value">33" BFG MT</div>
+        <div class="ride-badges">
+          <span class="badge badge-era">Mid-Era</span>
         </div>
       </div>
-      <div class="card-tags">
-        <span class="tag">MID-ERA</span>
-        <span class="tag">MODIFIED</span>
-        <span class="tag">4×4</span>
-        <span class="tag">INLINE-6</span>
-        <span class="tag">LIFTED</span>
-      </div>
-      <div class="card-footer">
-        <div>
-          <div class="card-price-label">Asking Price</div>
-          <div class="card-price">RM 62,000</div>
+      <div class="ride-body">
+        <div class="ride-header">
+          <div>
+            <div class="ride-name">Pajero Sport</div>
+            <div class="ride-year">2019</div>
+          </div>
+          <div class="ride-price">RM 88K</div>
         </div>
-        <div class="card-actions">
-          <button class="btn-save">♡</button>
-          <button class="btn-view">VIEW RIDE</button>
+        <div class="ride-specs">
+          <div class="spec-item">
+            <div class="spec-label">Engine</div>
+            <div class="spec-val">2.4L Diesel</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Trans</div>
+            <div class="spec-val">8-Speed Auto</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Mileage</div>
+            <div class="spec-val">68,000 km</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Condition</div>
+            <div class="spec-val">Very Good</div>
+          </div>
+        </div>
+        <div class="ride-footer">
+          <div class="ride-location"><span class="loc-dot"></span>Sabah</div>
+          <div class="ride-views">891 views</div>
         </div>
       </div>
     </div>
-  </article>
 
-  <!-- CARD 8 -->
-  <article class="ride-card" data-tags="classic under50 4x4">
-    <div class="card-img-wrap">
-      <img src="https://images.unsplash.com/photo-1504215680853-026ed2a45def?w=800&q=80" alt="Hilux Surf">
-      <div class="card-index">08</div>
-    </div>
-    <div class="card-specs">
-      <div class="card-header">
-        <div class="card-meta">
-          <span class="card-year">1996</span>
-          <span class="card-location">Kedah</span>
+    <!-- Card 4 -->
+    <div class="ride-card">
+      <div class="ride-img-wrap">
+        <img class="ride-img" src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&q=80" alt="Wrangler TJ">
+        <div class="ride-actions">
+          <button class="ride-action-btn" title="Save">♡</button>
+          <button class="ride-action-btn" title="Share">↗</button>
         </div>
-        <h2 class="card-title">Toyota<br>Hilux Surf</h2>
-        <div class="card-subtitle">ハイラックス · サーフ · 4Runner</div>
-      </div>
-      <div class="spec-table">
-        <div class="spec-row">
-          <div class="spec-label">Engine</div>
-          <div class="spec-value">3.0L 3RZ-FE I4</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Power</div>
-          <div class="spec-value">150 hp / 246 Nm</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Drivetrain</div>
-          <div class="spec-value">Part-Time 4WD</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Gearbox</div>
-          <div class="spec-value">4-Speed Auto</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Generation</div>
-          <div class="spec-value">N130 (3rd Gen)</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Mileage</div>
-          <div class="spec-value">198,000 km</div>
+        <div class="ride-badges">
+          <span class="badge badge-era">Mid-Era</span>
+          <span class="badge badge-mod">Modified</span>
         </div>
       </div>
-      <div class="card-tags">
-        <span class="tag">CLASSIC</span>
-        <span class="tag">UNDER RM50K</span>
-        <span class="tag">4×4</span>
-        <span class="tag">DAILY-ABLE</span>
-      </div>
-      <div class="card-footer">
-        <div>
-          <div class="card-price-label">Asking Price</div>
-          <div class="card-price">RM 34,000</div>
+      <div class="ride-body">
+        <div class="ride-header">
+          <div>
+            <div class="ride-name">Wrangler TJ Sport</div>
+            <div class="ride-year">2005</div>
+          </div>
+          <div class="ride-price">RM 62K</div>
         </div>
-        <div class="card-actions">
-          <button class="btn-save">♡</button>
-          <button class="btn-view">VIEW RIDE</button>
+        <div class="ride-specs">
+          <div class="spec-item">
+            <div class="spec-label">Engine</div>
+            <div class="spec-val">4.0L I6</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Trans</div>
+            <div class="spec-val">5-Speed Manual</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Mileage</div>
+            <div class="spec-val">112,000 km</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Condition</div>
+            <div class="spec-val">Good</div>
+          </div>
+        </div>
+        <div class="ride-footer">
+          <div class="ride-location"><span class="loc-dot"></span>Selangor</div>
+          <div class="ride-views">567 views</div>
         </div>
       </div>
     </div>
-  </article>
 
-  <!-- CARD 9 -->
-  <article class="ride-card" data-tags="mid-era 4x4">
-    <div class="card-img-wrap">
-      <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80" alt="Lexus GX470">
-      <div class="card-index">09</div>
-    </div>
-    <div class="card-specs">
-      <div class="card-header">
-        <div class="card-meta">
-          <span class="card-year">2007</span>
-          <span class="card-location">Johor</span>
+    <!-- Card 5 -->
+    <div class="ride-card">
+      <div class="ride-img-wrap">
+        <img class="ride-img" src="https://images.unsplash.com/photo-1504215680853-026ed2a45def?w=600&q=80" alt="Hilux Surf">
+        <div class="ride-actions">
+          <button class="ride-action-btn" title="Save">♡</button>
+          <button class="ride-action-btn" title="Share">↗</button>
         </div>
-        <h2 class="card-title">Lexus<br>GX 470</h2>
-        <div class="card-subtitle">レクサス · GX470 · 120系</div>
-      </div>
-      <div class="spec-table">
-        <div class="spec-row">
-          <div class="spec-label">Engine</div>
-          <div class="spec-value">4.7L 2UZ-FE V8</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Power</div>
-          <div class="spec-value">235 hp / 414 Nm</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Drivetrain</div>
-          <div class="spec-value">CRAWL 4WD + CDL</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Gearbox</div>
-          <div class="spec-value">5-Speed Auto</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Suspension</div>
-          <div class="spec-value">Kinetic KDSS</div>
-        </div>
-        <div class="spec-row">
-          <div class="spec-label">Mileage</div>
-          <div class="spec-value">112,000 km</div>
+        <div class="ride-badges">
+          <span class="badge badge-era">Classic</span>
         </div>
       </div>
-      <div class="card-tags">
-        <span class="tag">MID-ERA</span>
-        <span class="tag">4×4</span>
-        <span class="tag">V8</span>
-        <span class="tag">LUXURY</span>
-        <span class="tag">KDSS</span>
-      </div>
-      <div class="card-footer">
-        <div>
-          <div class="card-price-label">Asking Price</div>
-          <div class="card-price">RM 78,000</div>
+      <div class="ride-body">
+        <div class="ride-header">
+          <div>
+            <div class="ride-name">Hilux Surf</div>
+            <div class="ride-year">1996</div>
+          </div>
+          <div class="ride-price">RM 34K</div>
         </div>
-        <div class="card-actions">
-          <button class="btn-save">♡</button>
-          <button class="btn-view">VIEW RIDE</button>
+        <div class="ride-specs">
+          <div class="spec-item">
+            <div class="spec-label">Engine</div>
+            <div class="spec-val">3.0L Diesel</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Trans</div>
+            <div class="spec-val">4-Speed Auto</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Mileage</div>
+            <div class="spec-val">210,000 km</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Condition</div>
+            <div class="spec-val">Good</div>
+          </div>
+        </div>
+        <div class="ride-footer">
+          <div class="ride-location"><span class="loc-dot"></span>Kedah</div>
+          <div class="ride-views">443 views</div>
         </div>
       </div>
     </div>
-  </article>
 
+    <!-- Card 6 -->
+    <div class="ride-card">
+      <div class="ride-img-wrap">
+        <img class="ride-img" src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=80" alt="Lexus GX470">
+        <div class="ride-actions">
+          <button class="ride-action-btn" title="Save">♡</button>
+          <button class="ride-action-btn" title="Share">↗</button>
+        </div>
+        <div class="ride-badges">
+          <span class="badge badge-era">Mid-Era</span>
+        </div>
+      </div>
+      <div class="ride-body">
+        <div class="ride-header">
+          <div>
+            <div class="ride-name">Lexus GX470</div>
+            <div class="ride-year">2007</div>
+          </div>
+          <div class="ride-price">RM 78K</div>
+        </div>
+        <div class="ride-specs">
+          <div class="spec-item">
+            <div class="spec-label">Engine</div>
+            <div class="spec-val">4.7L V8</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Trans</div>
+            <div class="spec-val">5-Speed Auto</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Mileage</div>
+            <div class="spec-val">134,000 km</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Condition</div>
+            <div class="spec-val">Very Good</div>
+          </div>
+        </div>
+        <div class="ride-footer">
+          <div class="ride-location"><span class="loc-dot"></span>Johor</div>
+          <div class="ride-views">722 views</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- LOAD MORE -->
   <div class="load-more-wrap">
-    <button class="btn-load">
-      LOAD MORE RIDES
-      <span>↓</span>
-    </button>
+    <div class="load-line"></div>
+    <button class="btn-load">Load More Rides — 18 Remaining</button>
+    <div class="load-line"></div>
   </div>
 
 </main>
 
-<!-- BOTTOM NAV -->
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">CheckMyRide.MY</div>
+  <div class="footer-links">
+    <a href="#">About</a>
+    <a href="#">List a Ride</a>
+    <a href="#">Community</a>
+    <a href="#">Events</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 CheckMyRide.MY · Jeep &amp; 4×4 Culture Malaysia</div>
+</footer>
+
+<!-- BOTTOM NAV (mobile) -->
 <nav class="bottom-nav">
-  <button class="nav-item active">
-    <span class="nav-icon">⊞</span>
-    Browse
-  </button>
-  <button class="nav-item" onclick="toggleSearch()">
-    <span class="nav-icon">◎</span>
-    Search
-  </button>
-  <button class="nav-item">
-    <span class="nav-icon">♡</span>
-    Saved
-  </button>
-  <button class="nav-item">
-    <span class="nav-icon">◉</span>
-    Profile
-  </button>
+  <div class="bottom-nav-inner">
+    <a href="#" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Browse
+    </a>
+    <a href="#" class="nav-item" onclick="openSearch(); return false;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+      Search
+    </a>
+    <a href="#" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Saved
+    </a>
+    <a href="#" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Profile
+    </a>
+  </div>
 </nav>
 
-<!-- SEARCH OVERLAY -->
-<div class="search-overlay" id="searchOverlay">
-  <div class="search-header">
-    <input class="search-input" type="text" placeholder="Search make, model, year..." id="searchInput">
-    <button class="search-close" onclick="toggleSearch()">CLOSE ×</button>
-  </div>
-</div>
-
 <script>
-  // Filter
-  function filterCards(btn, filter) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+  // Search overlay
+  function openSearch() {
+    document.getElementById('searchOverlay').classList.add('open');
+    setTimeout(() => document.getElementById('searchInput').focus(), 100);
+  }
+  function closeSearch() {
+    document.getElementById('searchOverlay').classList.remove('open');
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeSearch();
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSearch(); }
+  });
 
-    document.querySelectorAll('.ride-card').forEach(card => {
-      const tags = card.dataset.tags || '';
-      if (filter === 'all') {
-        card.style.display = 'grid';
-      } else {
-        card.style.display = tags.includes(filter) ? 'grid' : 'none';
-      }
-    });
+  // Filter tabs
+  function setFilter(el) {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
   }
 
-  // Search toggle
-  function toggleSearch() {
-    const overlay = document.getElementById('searchOverlay');
-    const isOpen = overlay.classList.contains('open');
-    overlay.classList.toggle('open');
-    if (!isOpen) document.getElementById('searchInput').focus();
-  }
-
-  // Save toggle
-  document.querySelectorAll('.btn-save').forEach(btn => {
+  // View toggle
+  document.querySelectorAll('.view-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      btn.textContent = btn.textContent === '♡' ? '♥' : '♡';
-      btn.style.color = btn.textContent === '♥' ? '#000' : '';
+      document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
     });
   });
 
-  // Scroll-triggered fade
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.animationPlayState = 'running';
-      }
-    });
-  }, { threshold: 0.1 });
+  // Subtle parallax on hero bg
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const heroBg = document.getElementById('heroBg');
+    if (heroBg) {
+      heroBg.style.transform = `translateY(${scrolled * 0.25}px)`;
+    }
+  });
 
-  document.querySelectorAll('.ride-card').forEach(card => {
-    card.style.animationPlayState = 'paused';
-    observer.observe(card);
+  // Save button toggle
+  document.querySelectorAll('.ride-action-btn').forEach(btn => {
+    if (btn.title === 'Save') {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        btn.style.color = btn.style.color === 'rgb(200, 168, 75)' ? '' : 'var(--accent)';
+        btn.style.borderColor = btn.style.borderColor === 'rgb(200, 168, 75)' ? '' : 'var(--accent)';
+        btn.textContent = btn.textContent === '♥' ? '♡' : '♥';
+      });
+    }
   });
 </script>
-
 </body>
 </html>
